@@ -1,7 +1,4 @@
-const formatDate = (input) => {
-  const date = new Date(input);
-  return date.toLocaleDateString();
-}
+import { formatDate } from "../utils/dateHelper";
 
 export default function User({
   _id,
