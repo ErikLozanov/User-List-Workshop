@@ -6,3 +6,11 @@ export async function getAll () {
 
     return result.users;
 }
+
+
+export const getOne = async (userId) => {
+    const response = await fetch(`${baseUrl}/${userId}`);
+    const result = await response.json();
+
+    return result;
+}

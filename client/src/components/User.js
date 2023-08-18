@@ -1,3 +1,8 @@
+const formatDate = (input) => {
+  const date = new Date(input);
+  return date.toLocaleDateString();
+}
+
 export default function User({
   _id,
   firstName,
@@ -6,6 +11,7 @@ export default function User({
   imageUrl,
   createdAt,
   phoneNumber,
+  onInfoClick
 }) {
     return (
         <tr>
@@ -20,7 +26,7 @@ export default function User({
         <td>{lastName}</td>
         <td>{email}</td>
         <td>{phoneNumber}</td>
-        <td>{createdAt}</td>
+        <td>{formatDate(createdAt)}</td>
         <td className="actions">
           <button className="btn edit-btn" title="Edit">
             <svg
@@ -56,7 +62,7 @@ export default function User({
               ></path>
             </svg>
           </button>
-          <button className="btn info-btn" title="Info">
+          <button className="btn info-btn" title="Info" onClick={() => onInfoClick(_id)}>
             <svg
               aria-hidden="true"
               focusable="false"
