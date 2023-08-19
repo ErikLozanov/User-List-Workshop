@@ -8,7 +8,8 @@ export default function User({
   imageUrl,
   createdAt,
   phoneNumber,
-  onInfoClick
+  onInfoClick,
+  onDelClick,
 }) {
     return (
         <tr>
@@ -42,7 +43,7 @@ export default function User({
               ></path>
             </svg>
           </button>
-          <button className="btn delete-btn" title="Delete">
+          <button className="btn delete-btn" title="Delete" onClick={() => onDelClick(_id)}>
             <svg
               aria-hidden="true"
               focusable="false"

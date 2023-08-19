@@ -12,7 +12,14 @@ function App() {
 
   const [users,setUsers] = useState([]);
 
-  useEffect(() => {
+
+  const onDeleteClick = async (userId,onClose) => {
+    const userA = await userService.delUser(userId)
+    setUsers(users.filter(u => u._id !== userId));
+    onClose();
+  }
+
+ useEffect(() => {
     userService.getAll()
     .then(users => {
       setUsers(users);
@@ -27,9 +34,9 @@ function App() {
       <main className='main'>
       <section className="card users-container">
         <Search />
-        <UserList users={users}/>
+        <UserList users={users} onDeleteClick={onDeleteClick}/>
 
-        <button class="btn-add btn">Add new user</button>
+        <button className="btn-add btn">Add new user</button>
 
     </section>
 

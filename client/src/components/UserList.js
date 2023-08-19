@@ -3,27 +3,38 @@ import * as userService from "../../src/services/userService";
 
 import User from "./User";
 import UserDetails from "./UserDetails";
+import DeleteConfirm from "./DeleteConfirm";
 
 export default function UserList({
-  users
+  users,
+  onDeleteClick,
 }) {
 
   const [selectedUser, setSelectedUser] = useState(null);
   
+  const [selectedUserDel, setSelectedUserDel] = useState(null);
+
+
   const onInfoClick = async (userId) => {
-    const userA = await userService.getOne(userId);
-    console.log("Fetched user:", userA.user);
-    
+    const userA = await userService.getOne(userId);    
 
      setSelectedUser(userA.user);
+    };
+    
+  const onDelClick = async (userId) => {
+    const userA = await userService.getOne(userId);    
+
+    setSelectedUserDel(userA.user);
     };
 
     const onClose = () => {
       setSelectedUser(null);
+      setSelectedUserDel(null);
     }
     
     return (
       <>
+      {selectedUserDel && <DeleteConfirm {...selectedUserDel} onDeleteClick={onDeleteClick} onClose={onClose} />}
      {selectedUser && <UserDetails {...selectedUser} onClose={onClose}/>}
 <div className="table-wrapper">
   {/* Overlap components  */}
@@ -186,7 +197,7 @@ export default function UserList({
       </tr>
     </thead>
     <tbody>
-      {users.map(u => <User key={u._id} {...u} onInfoClick={onInfoClick} />)}
+      {users.map(u => <User key={u._id} {...u} onInfoClick={onInfoClick} onDelClick={onDelClick}/>)}
     </tbody>
   </table>
 </div>
