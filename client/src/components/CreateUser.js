@@ -2,7 +2,6 @@ export default function CreateUser({
     onClose,
     onSubmit,
 }) {
-    console.log('hi!');
     return (
   <div className="overlay">
 <div className="backdrop"></div>

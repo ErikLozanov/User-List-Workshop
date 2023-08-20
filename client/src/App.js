@@ -13,6 +13,7 @@ function App() {
 
   const [users,setUsers] = useState([]);
   const [addUser, setAddUser] = useState(null);
+  const [error, setError] = useState(false);
 
 
   const onClose = () => {
@@ -43,8 +44,8 @@ function App() {
     let streetNumber = formData.get('streetNumber');
     let city = formData.get('city');
     let country = formData.get('country');
-    const response = await userService.addUser({firstName,lastName,email,phoneNumber,imageUrl,address:{country,city,street,streetNumber}});
-    onClose();
+
+
   }
 
  useEffect(() => {
