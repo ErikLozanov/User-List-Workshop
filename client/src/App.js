@@ -11,6 +11,7 @@ import CreateUser from './components/CreateUser.js';
 
 function App() {
 
+  const [isLoaded, setIsLoaded] = useState(false);
   const [users,setUsers] = useState([]);
   const [addUser, setAddUser] = useState(null);
   const [error, setError] = useState(false);
@@ -94,29 +95,36 @@ function App() {
  useEffect(() => {
     userService.getAll()
     .then(users => {
+      setIsLoaded(true);
       setUsers(users);
     }).catch(err => {
       console.log('Error' + err);
     })
   }, []);
-  return (
-    <>
-      <Header />
 
-      <main className='main'>
-      <section className="card users-container">
-        <Search onSearch={onSearch}/>
-        <UserList users={users} onDeleteClick={onDeleteClick} onEditUser={onEditUser}/>
-        {addUser && <CreateUser onClose={onClose} onSubmit={onSubmit} />}
-        <button className="btn-add btn" onClick={onAddUserClick}>Add new user</button>
 
-    </section>
-
-      </main>
-
-      <Footer />
-    </>
-  );
+  if(!isLoaded) {
+    return <div className="spinner"></div>;
+  } else {
+    return (
+      <>
+        <Header />
+  
+        <main className='main'>
+        <section className="card users-container">
+          <Search onSearch={onSearch}/>
+          <UserList users={users} onDeleteClick={onDeleteClick} onEditUser={onEditUser}/>
+          {addUser && <CreateUser onClose={onClose} onSubmit={onSubmit} />}
+          <button className="btn-add btn" onClick={onAddUserClick}>Add new user</button>
+  
+      </section>
+  
+        </main>
+  
+        <Footer />
+      </>
+    );
+  }
 }
 
 export default App;
