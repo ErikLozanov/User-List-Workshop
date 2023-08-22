@@ -21,8 +21,13 @@ function App() {
   }
 
   const onDeleteClick = async (userId,onClose) => {
+    //Delete from Server
     const userA = await userService.delUser(userId)
+
+    //Delete from VDom
     setUsers(users.filter(u => u._id !== userId));
+
+    //Close dialog after clicking delete
     onClose();
   }
 
@@ -45,7 +50,11 @@ function App() {
     let city = formData.get('city');
     let country = formData.get('country');
 
-
+    //Send Ajax to the server
+    const createdUser = await userService.addUser({firstName,lastName,email,phoneNumber,imageUrl,address:{country,city,street,streetNumber}});
+    
+    setUsers(state => [...state, createdUser.user]);
+    onClose();
   }
 
  useEffect(() => {

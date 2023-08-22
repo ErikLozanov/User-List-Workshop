@@ -26,5 +26,6 @@ export const addUser = async (data) => {
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data)})
 
-    return response;
+    const result = await response.json();
+    return result;
 }
