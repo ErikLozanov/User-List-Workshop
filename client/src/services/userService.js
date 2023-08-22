@@ -29,3 +29,12 @@ export const addUser = async (data) => {
     const result = await response.json();
     return result;
 }
+export const editUser = async (userId,data) => {
+    const response = await fetch(`${baseUrl}/${userId}`,
+     {method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)})
+
+    const result = await response.json();
+    return result;
+}

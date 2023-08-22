@@ -10,6 +10,7 @@ export default function User({
   phoneNumber,
   onInfoClick,
   onDelClick,
+  onEditClick
 }) {
     return (
         <tr>
@@ -26,7 +27,7 @@ export default function User({
         <td>{phoneNumber}</td>
         <td>{formatDate(createdAt)}</td>
         <td className="actions">
-          <button className="btn edit-btn" title="Edit">
+          <button className="btn edit-btn" onClick={() => onEditClick(_id)} title="Edit">
             <svg
               aria-hidden="true"
               focusable="false"

@@ -57,6 +57,30 @@ function App() {
     onClose();
   }
 
+  const onEditUser = async (e,userId, onClose) => {
+    e.preventDefault();
+
+    let formData = new FormData(e.currentTarget);
+
+    let firstName = formData.get('firstName');
+    let lastName = formData.get('lastName');
+    let email = formData.get('email');
+    let imageUrl = formData.get('imageUrl');
+    let phoneNumber = formData.get('phoneNumber');
+    let street = formData.get('street');
+    let streetNumber = formData.get('streetNumber');
+    let city = formData.get('city');
+    let country = formData.get('country');
+
+    console.log(Object.fromEntries(formData));
+    console.log(userId);
+    //Send Ajax to the server
+    const editUser = await userService.editUser(userId,{firstName,lastName,email,phoneNumber,imageUrl,address:{country,city,street,streetNumber}});
+    console.log(editUser);
+    setUsers(state => state.map(x=> x._id === userId ? editUser.user : x));
+    onClose();
+  }
+
  useEffect(() => {
     userService.getAll()
     .then(users => {
@@ -72,7 +96,7 @@ function App() {
       <main className='main'>
       <section className="card users-container">
         <Search />
-        <UserList users={users} onDeleteClick={onDeleteClick}/>
+        <UserList users={users} onDeleteClick={onDeleteClick} onEditUser={onEditUser}/>
         {addUser && <CreateUser onClose={onClose} onSubmit={onSubmit} />}
         <button className="btn-add btn" onClick={onAddUserClick}>Add new user</button>
 

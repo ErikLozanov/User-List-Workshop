@@ -4,16 +4,23 @@ import * as userService from "../../src/services/userService";
 import User from "./User";
 import UserDetails from "./UserDetails";
 import DeleteConfirm from "./DeleteConfirm";
+import EditUser from "./EditUser";
 
 export default function UserList({
   users,
   onDeleteClick,
+  onEditUser,
 }) {
 
   const [selectedUser, setSelectedUser] = useState(null);
-  
+  const [selectEditUser, setSelectEditUser] = useState(null);
   const [selectedUserDel, setSelectedUserDel] = useState(null);
 
+  const onEditClick = async (userId) => {
+    const userA = await userService.getOne(userId);
+
+    setSelectEditUser(userA.user);
+  }
 
   const onInfoClick = async (userId) => {
     const userA = await userService.getOne(userId);    
@@ -30,10 +37,14 @@ export default function UserList({
     const onClose = () => {
       setSelectedUser(null);
       setSelectedUserDel(null);
+      setSelectEditUser(null);
     }
+
+
     
     return (
       <>
+      {selectEditUser && <EditUser {...selectEditUser} onClose={onClose} onEditUser={onEditUser}/>}
       {selectedUserDel && <DeleteConfirm {...selectedUserDel} onDeleteClick={onDeleteClick} onClose={onClose} />}
      {selectedUser && <UserDetails {...selectedUser} onClose={onClose}/>}
 <div className="table-wrapper">
@@ -197,7 +208,7 @@ export default function UserList({
       </tr>
     </thead>
     <tbody>
-      {users.map(u => <User key={u._id} {...u} onInfoClick={onInfoClick} onDelClick={onDelClick}/>)}
+      {users.map(u => <User key={u._id} {...u} onInfoClick={onInfoClick} onDelClick={onDelClick} onEditClick={onEditClick}/>)}
     </tbody>
   </table>
 </div>
