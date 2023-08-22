@@ -81,6 +81,16 @@ function App() {
     onClose();
   }
 
+  const onSearch = (e) => {
+    e.preventDefault();
+
+    let formData = new FormData(e.currentTarget);
+
+    let criteria = formData.get('criteria');
+    let search = formData.get('search');
+
+    setUsers(users.filter(x => x.firstName.includes(search)));
+  }
  useEffect(() => {
     userService.getAll()
     .then(users => {
@@ -95,7 +105,7 @@ function App() {
 
       <main className='main'>
       <section className="card users-container">
-        <Search />
+        <Search onSearch={onSearch}/>
         <UserList users={users} onDeleteClick={onDeleteClick} onEditUser={onEditUser}/>
         {addUser && <CreateUser onClose={onClose} onSubmit={onSubmit} />}
         <button className="btn-add btn" onClick={onAddUserClick}>Add new user</button>
