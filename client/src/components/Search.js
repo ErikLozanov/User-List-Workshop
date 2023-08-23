@@ -1,5 +1,6 @@
 export default function Search({
   onSearch,
+  closeBtn
 }) {
     return (
         <form className="search-form" onSubmit={onSearch}>
@@ -15,7 +16,7 @@ export default function Search({
         </h2>
         <div className="search-input-container">
           <input type="text" placeholder="Please, select the search criteria" name="search" />
-          <button className="btn close-btn">
+          <button className="btn close-btn" onClick={closeBtn}>
             <i className="fa-solid fa-xmark"></i>
           </button>
 

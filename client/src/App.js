@@ -15,7 +15,8 @@ function App() {
   const [users,setUsers] = useState([]);
   const [addUser, setAddUser] = useState(null);
   const [error, setError] = useState(false);
-
+  const [q, setQ] = useState('');
+ 
 
   const onClose = () => {
     setAddUser(null);
@@ -89,14 +90,31 @@ function App() {
 
     let criteria = formData.get('criteria');
     let search = formData.get('search');
+    let searchCrit = null;
+    switch (criteria) {
+      case 'First Name': searchCrit = 'firstName';   break;
+      case 'Last Name': searchCrit = 'lastName';   break;
+      case 'Email': searchCrit = 'email';   break;
+      case 'Phone': searchCrit = 'phoneNumber';   break;
+    }
 
-    setUsers(users.filter(x => x.firstName.includes(search)));
+    if(!searchCrit) {
+      alert('Please select a criteria!');
+      return;
+    }
+    setUsers(users.filter(x => x[searchCrit].includes(search)));
   }
+
+  const closeBtn = () => {
+    setUsers(users);
+  }
+
  useEffect(() => {
     userService.getAll()
     .then(users => {
       setIsLoaded(true);
       setUsers(users);
+      setQ(users);
     }).catch(err => {
       console.log('Error' + err);
     })
@@ -112,7 +130,7 @@ function App() {
   
         <main className='main'>
         <section className="card users-container">
-          <Search onSearch={onSearch}/>
+          <Search closeBtn={closeBtn} onSearch={onSearch}/>
           <UserList users={users} onDeleteClick={onDeleteClick} onEditUser={onEditUser}/>
           {addUser && <CreateUser onClose={onClose} onSubmit={onSubmit} />}
           <button className="btn-add btn" onClick={onAddUserClick}>Add new user</button>
