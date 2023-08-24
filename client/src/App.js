@@ -130,7 +130,17 @@ function App() {
       errors.imageUrl = 'ImageUrl is not valid!';
     }
     if(e.target.name === 'country' && value.length < 2 && value !== '') {
+      console.log('hi!');
       errors.country = 'Country should be at least 2 characters long!';
+    }
+    if(e.target.name === 'city' && value.length < 3 && value !== '') {
+      errors.city = 'City should be at least 3 characters long!';
+    }
+    if(e.target.name === 'street' && value.length < 3 && value !== '') {
+      errors.street = 'Street should be at least 3 characters long!';
+    }
+    if(e.target.name === 'streetNumber' && (isNaN(value) || value <= 0)) {
+      errors.streetNumber = 'Street number should be a positive number!';
     }
     setFormErrors(errors);
   };

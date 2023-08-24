@@ -86,18 +86,16 @@ export default function CreateUser({
             <span><i className="fa-solid fa-map"></i></span>
             <input style={formErrors.country ? {borderColor:'red'} : null} id="country" name="country" type="text" value={formValues.country} onChange={formChangeHandler} onBlur={formValidate}/>
           </div>
-          {formErrors && <p className="form-error">{formErrors.country}</p>}
-          
+          {formErrors && <p className="form-error">{formErrors.country}</p>}   
         </div>
+        
         <div className="form-group">
           <label htmlFor="city">City</label>
           <div className="input-wrapper">
             <span><i className="fa-solid fa-city"></i></span>
-            <input id="city" name="city" type="text" value={formValues.city} onChange={formChangeHandler}/>
+            <input style={formErrors.city ? {borderColor:'red'} : null} id="city" name="city" type="text" value={formValues.city} onChange={formChangeHandler} onBlur={formValidate}/>
           </div>
-          {/* <p className="form-error">
-            City should be at least 3 characters long!
-          </p> */}
+          {formErrors && <p className="form-error">{formErrors.city}</p>}
         </div>
       </div>
 
@@ -106,21 +104,18 @@ export default function CreateUser({
           <label htmlFor="street">Street</label>
           <div className="input-wrapper">
             <span><i className="fa-solid fa-map"></i></span>
-            <input id="street" name="street" type="text" value={formValues.street} onChange={formChangeHandler}/>
+            <input style={formErrors.street ? {borderColor:'red'} : null} id="street" name="street" type="text" value={formValues.street} onChange={formChangeHandler} onBlur={formValidate}/>
           </div>
-          {/* <p className="form-error">
-            Street should be at least 3 characters long!
-          </p> */}
+          {formErrors && <p className="form-error">{formErrors.street}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="streetNumber">Street number</label>
           <div className="input-wrapper">
             <span><i className="fa-solid fa-house-chimney"></i></span>
-            <input id="streetNumber" name="streetNumber" type="text" value={formValues.streetNumber} onChange={formChangeHandler}/>
+            <input style={formErrors.streetNumber ? {borderColor:'red'} : null} id="streetNumber" name="streetNumber" type="text" value={formValues.streetNumber} onChange={formChangeHandler} onBlur={formValidate}/>
           </div>
-          {/* <p className="form-error">
-            Street number should be a positive number!
-          </p> */}
+          {formErrors && <p className="form-error">{formErrors.streetNumber}</p>}
+          
         </div>
       </div>
       <div id="form-actions">
