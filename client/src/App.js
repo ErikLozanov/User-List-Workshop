@@ -61,20 +61,20 @@ function App() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    let formData = new FormData(e.currentTarget);
-
-    let firstName = formData.get('firstName');
-    let lastName = formData.get('lastName');
-    let email = formData.get('email');
-    let imageUrl = formData.get('imageUrl');
-    let phoneNumber = formData.get('phoneNumber');
-    let street = formData.get('street');
-    let streetNumber = formData.get('streetNumber');
-    let city = formData.get('city');
-    let country = formData.get('country');
-
     //Send Ajax to the server
-    const createdUser = await userService.addUser({firstName,lastName,email,phoneNumber,imageUrl,address:{country,city,street,streetNumber}});
+    const createdUser = await userService.addUser({
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      email: formValues.email,
+      imageUrl: formValues.imageUrl,
+      phoneNumber: formValues.phoneNumber,
+      address: {
+        country: formValues.country,
+        city: formValues.city,
+        street: formValues.street,
+        streetNumber: formValues.streetNumber,
+      }
+    });
     
     setUsers(state => [...state, createdUser.user]);
     onClose();
@@ -139,7 +139,7 @@ function App() {
     if(e.target.name === 'street' && value.length < 3 && value !== '') {
       errors.street = 'Street should be at least 3 characters long!';
     }
-    if(e.target.name === 'streetNumber' && (isNaN(value) || value <= 0)) {
+    if(e.target.name === 'streetNumber' && (isNaN(value) || value <= 0) && value !== '') {
       errors.streetNumber = 'Street number should be a positive number!';
     }
     setFormErrors(errors);
