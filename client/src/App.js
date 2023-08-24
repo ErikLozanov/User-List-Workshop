@@ -11,8 +11,20 @@ import CreateUser from './components/CreateUser.js';
 
 function App() {
 
-  const [isLoaded, setIsLoaded] = useState(false);
   const [users,setUsers] = useState([]);
+  const [formValues, setFormValues] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    imageUrl: '',
+    phoneNumber: '',
+      country:'',
+      city:'',
+      street:'',
+      streetNumber:'',
+  });
+
+  const [isLoaded, setIsLoaded] = useState(false);
   const [addUser, setAddUser] = useState(null);
   const [error, setError] = useState(false);
   const [q, setQ] = useState('');
@@ -83,6 +95,10 @@ function App() {
     onClose();
   }
 
+  const formChangeHandler = (e) => {
+    setFormValues(state => ({...state, [e.target.name] : e.target.value}));
+  }
+
   const onSearch = (e) => {
     e.preventDefault();
 
@@ -131,8 +147,17 @@ function App() {
         <main className='main'>
         <section className="card users-container">
           <Search closeBtn={closeBtn} onSearch={onSearch}/>
-          <UserList users={users} onDeleteClick={onDeleteClick} onEditUser={onEditUser}/>
-          {addUser && <CreateUser onClose={onClose} onSubmit={onSubmit} />}
+          <UserList 
+          users={users} 
+          onDeleteClick={onDeleteClick} 
+          onEditUser={onEditUser}
+          />
+          {addUser && <CreateUser 
+          onClose={onClose} 
+          onSubmit={onSubmit} 
+          formValues={formValues}
+          formChangeHandler={formChangeHandler}
+          />}
           <button className="btn-add btn" onClick={onAddUserClick}>Add new user</button>
   
       </section>
