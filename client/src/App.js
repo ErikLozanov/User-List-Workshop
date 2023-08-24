@@ -23,11 +23,20 @@ function App() {
       street:'',
       streetNumber:'',
   });
+  const [formErrors, setFormErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    imageUrl: '',
+      country:'',
+      city:'',
+      street:'',
+      streetNumber:'',
+  });
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [addUser, setAddUser] = useState(null);
-  const [error, setError] = useState(false);
-  const [q, setQ] = useState('');
  
 
   const onClose = () => {
@@ -96,8 +105,35 @@ function App() {
   }
 
   const formChangeHandler = (e) => {
+
     setFormValues(state => ({...state, [e.target.name] : e.target.value}));
-  }
+  };
+
+  const formValidate = (e) => {
+    const value = e.target.value;
+    const errors = {};
+    console.log(e.target.name);
+    console.log(value);
+    if(e.target.name === 'firstName' && (value.length < 3 || value.length > 20) && value !== '') {
+      errors.firstName = 'First name should be at least 3 characters long!';
+    }
+    if(e.target.name === 'lastName' && (value.length < 3 || value.length > 20) && value !== '') {
+      errors.lastName = 'Last name should be at least 3 characters long!';
+    }
+    if(e.target.name === 'email' && !value.includes('@') && value !== '') {
+      errors.email = 'Email is not valid!';
+    }
+    if(e.target.name === 'phoneNumber' && (!value.toString().startsWith('0') || value.length !== 10) && value !== '') {
+      errors.phoneNumber = 'Phone number is not valid!';
+    }
+    if(e.target.name === 'imageUrl' && !value.startsWith('https://') && value !== '') {
+      errors.imageUrl = 'ImageUrl is not valid!';
+    }
+    if(e.target.name === 'country' && value.length < 2 && value !== '') {
+      errors.country = 'Country should be at least 2 characters long!';
+    }
+    setFormErrors(errors);
+  };
 
   const onSearch = (e) => {
     e.preventDefault();
@@ -130,7 +166,6 @@ function App() {
     .then(users => {
       setIsLoaded(true);
       setUsers(users);
-      setQ(users);
     }).catch(err => {
       console.log('Error' + err);
     })
@@ -157,6 +192,8 @@ function App() {
           onSubmit={onSubmit} 
           formValues={formValues}
           formChangeHandler={formChangeHandler}
+          formErrors={formErrors}
+          formValidate={formValidate}
           />}
           <button className="btn-add btn" onClick={onAddUserClick}>Add new user</button>
   

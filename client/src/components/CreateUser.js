@@ -2,7 +2,9 @@ export default function CreateUser({
     onClose,
     onSubmit,
     formValues,
-    formChangeHandler
+    formChangeHandler,
+    formErrors,
+    formValidate
 }) {
     return (
   <div className="overlay">
@@ -26,21 +28,22 @@ export default function CreateUser({
           <label htmlFor="firstName">First name</label>
           <div className="input-wrapper">
             <span><i className="fa-solid fa-user"></i></span>
-            <input id="firstName" name="firstName" type="text" value={formValues.firstName} onChange={formChangeHandler}/>
+            <input style={formErrors.firstName ? {borderColor:'red'} : null} id="firstName" name="firstName" type="text" value={formValues.firstName} onChange={formChangeHandler} onBlur={formValidate}/>
           </div>
-          {/* <p className="form-error">
-            First name should be at least 3 characters long!
-          </p> */}
+          {formErrors && <p className="form-error">
+            {formErrors.firstName}
+          </p>}
+          
         </div>
         <div className="form-group">
           <label htmlFor="lastName">Last name</label>
           <div className="input-wrapper">
             <span><i className="fa-solid fa-user"></i></span>
-            <input id="lastName" name="lastName" type="text" value={formValues.lastName} onChange={formChangeHandler}/>
+            <input style={formErrors.lastName ? {borderColor:'red'} : null} id="lastName" name="lastName" type="text" value={formValues.lastName} onChange={formChangeHandler} onBlur={formValidate}/>
           </div>
-          {/* <p className="form-error">
-            Last name should be at least 3 characters long!
-          </p> */}
+          {formErrors &&           <p className="form-error">
+            {formErrors.lastName}
+          </p>}
         </div>
       </div>
 
@@ -49,17 +52,20 @@ export default function CreateUser({
           <label htmlFor="email">Email</label>
           <div className="input-wrapper">
             <span><i className="fa-solid fa-envelope"></i></span>
-            <input id="email" name="email" type="text" value={formValues.email} onChange={formChangeHandler}/>
+            <input style={formErrors.email ? {borderColor:'red'} : null} id="email" name="email" type="text" value={formValues.email} onChange={formChangeHandler} onBlur={formValidate}/>
           </div>
-          {/* <p className="form-error">Email is not valid!</p> */}
+          {formErrors && <p className="form-error">{formErrors.email}</p>}
+
+
+        
         </div>
         <div className="form-group">
           <label htmlFor="phoneNumber">Phone number</label>
           <div className="input-wrapper">
             <span><i className="fa-solid fa-phone"></i></span>
-            <input id="phoneNumber" name="phoneNumber" type="text" value={formValues.phoneNumber} onChange={formChangeHandler}/>
+            <input style={formErrors.email ? {borderColor:'red'} : null} id="phoneNumber" name="phoneNumber" type="text" value={formValues.phoneNumber} onChange={formChangeHandler} onBlur={formValidate}/>
           </div>
-          {/* <p className="form-error">Phone number is not valid!</p> */}
+          {formErrors && <p className="form-error">{formErrors.phoneNumber}</p>}
         </div>
       </div>
 
@@ -67,9 +73,10 @@ export default function CreateUser({
         <label htmlFor="imageUrl">Image Url</label>
         <div className="input-wrapper">
           <span><i className="fa-solid fa-image"></i></span>
-          <input id="imageUrl" name="imageUrl" type="text" value={formValues.imageUrl} onChange={formChangeHandler}/>
+          <input style={formErrors.imageUrl ? {borderColor:'red'} : null} id="imageUrl" name="imageUrl" type="text" value={formValues.imageUrl} onChange={formChangeHandler} onBlur={formValidate}/>
         </div>
-        {/* <p className="form-error">ImageUrl is not valid!</p> */}
+        {formErrors && <p className="form-error">{formErrors.imageUrl}</p>}
+        
       </div>
 
       <div className="form-row">
@@ -77,11 +84,10 @@ export default function CreateUser({
           <label htmlFor="country">Country</label>
           <div className="input-wrapper">
             <span><i className="fa-solid fa-map"></i></span>
-            <input id="country" name="country" type="text" value={formValues.country} onChange={formChangeHandler} />
+            <input style={formErrors.country ? {borderColor:'red'} : null} id="country" name="country" type="text" value={formValues.country} onChange={formChangeHandler} onBlur={formValidate}/>
           </div>
-          {/* <p className="form-error">
-            Country should be at least 2 characters long!
-          </p> */}
+          {formErrors && <p className="form-error">{formErrors.country}</p>}
+          
         </div>
         <div className="form-group">
           <label htmlFor="city">City</label>
