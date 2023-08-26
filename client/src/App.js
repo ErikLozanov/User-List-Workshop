@@ -83,23 +83,20 @@ function App() {
   const onEditUser = async (e,userId, onClose) => {
     e.preventDefault();
 
-    let formData = new FormData(e.currentTarget);
-
-    let firstName = formData.get('firstName');
-    let lastName = formData.get('lastName');
-    let email = formData.get('email');
-    let imageUrl = formData.get('imageUrl');
-    let phoneNumber = formData.get('phoneNumber');
-    let street = formData.get('street');
-    let streetNumber = formData.get('streetNumber');
-    let city = formData.get('city');
-    let country = formData.get('country');
-
-    console.log(Object.fromEntries(formData));
-    console.log(userId);
     //Send Ajax to the server
-    const editUser = await userService.editUser(userId,{firstName,lastName,email,phoneNumber,imageUrl,address:{country,city,street,streetNumber}});
-    console.log(editUser);
+    const editUser = await userService.addUser({
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      email: formValues.email,
+      imageUrl: formValues.imageUrl,
+      phoneNumber: formValues.phoneNumber,
+      address: {
+        country: formValues.country,
+        city: formValues.city,
+        street: formValues.street,
+        streetNumber: formValues.streetNumber,
+      }
+    });
     setUsers(state => state.map(x=> x._id === userId ? editUser.user : x));
     onClose();
   }
